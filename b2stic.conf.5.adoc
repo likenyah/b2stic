@@ -1,0 +1,100 @@
+= b2stic.conf(5)
+:manmanual: File Formats Manual
+:mansource: b2stic {VERSION}
+
+== Name
+
+b2stic.conf - configuration file for b2stic
+
+== Synopsis
+
+{ETCDIR}/b2stic/b2stic.conf,
+**XDG_CONFIG_HOME**/b2stic/b2stic.conf
+
+== Description
+
+The default configuration is located at **XDG_CONFIG_HOME**/b2stic/b2stic.conf
+or {ETCDIR}/b2stic/b2stic.conf, if running as root.
+
+The format is similar to a pass:[*].ini file; it contains a few global
+options and a number of sections. Each section is an alphanumeric repository
+name wrapped in square brackets that is used to group information related to a
+particular repository.
+
+Comments are marked by a hash (*#*) and continue to the end of the line, lines
+may be broken by escaping them with a backslash (*\*), and empty lines are
+ignored.
+
+Values of **pass:[*]-command**, other than *password-command*, are passed to
+**eval**(1). Make sure they aren't evil.
+
+== Configuration Variables
+
+*account-id*=_id_::
+	Use _id_ as *B2_ACCOUNT_ID*.
+
+*account-id-command*=_command_::
+	Evaluate _command_ and use its output as *B2_ACCOUNT_ID*.
+
+*account-key*=_key_::
+	Use _key_ as *B2_ACCOUNT_KEY*.
+
+*account-key-command*=_command_::
+	Evaluate _command_ and use its output as *B2_ACCOUNT_KEY*.
+
+*bucket*=_name_::
+	Use B2 bucket with identifier _name_.
+
+*path*=_path_::
+	Operate on a **restic**(1) repository at _path_ in the bucket. Relative
+	paths are interpreted as relative to the root of the bucket's tree.
+
+*password*=_path_::
+	Pass _path_ on to **restic**(1) as *RESTIC_PASSWORD_FILE*.
+	 +
+	As a special case, specifying a _path_ of *restic-prompt* will cause
+	*b2stic* to unset *RESTIC_PASSWORD_COMMAND* and have **restic**(1) prompt
+	for a password.
+
+*password-command*=_command_::
+	Pass _command_ on to **restic**(1) as *RESTIC_PASSWORD_COMMAND*. Note that
+	this command is evaluated by **restic**(1), not by *b2stic*.
+	 +
+	As a special case, specifying a _command_ of *restic-prompt* will cause
+	*b2stic* to unset *RESTIC_PASSWORD_COMMAND* and have **restic**(1) prompt
+	for a password.
+
+== Example
+
+[source, conf]
+----
+account-id = "id"
+account-key-command = "some-command"
+
+[repo-name]
+	bucket = "bucket name"
+	path = "/path/to/repo"
+	password-command = "another-command"
+
+[repo-name-2]
+	bucket = "another name"
+	path = "/path/to/repo"
+
+	# Have restic(1) prompt for manual password entry.
+	password = "restic-prompt"
+
+[third-repo]
+	account-id = "repo-specific id"
+	account-key = "repo-specific key"
+
+	bucket = "bucket name"
+	path = "/different/path/to/repo"
+
+	# Use a password file.
+	password = "/some/file"
+----
+
+== See Also
+
+**b2stic**(1),
+**restic**(1)

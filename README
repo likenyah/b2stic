@@ -1,0 +1,4 @@
+= b2stic
+
+A wrapper for `restic(1)` to make is less irritating to use with B2 buckets by
+providing a configuration file.

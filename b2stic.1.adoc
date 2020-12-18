@@ -1,0 +1,39 @@
+= b2stic(1)
+:manmanual: General Commands Manual
+:mansource: b2stic {VERSION}
+
+== Name
+
+b2stic - operate on B2 Restic repositories
+
+== Synopsis
+
+*b2stic* [*-2chn*] _repository-name_ [_restic-argument_...]
+
+== Description
+
+Run a **restic**(1) command on a repository in a B2 bucket, using
+_repository-name_ to determine the bucket name, repository path, and correct
+credentials.
+
+=== Options
+
+*-2*::
+Set **RESTIC_pass:[*]** environment variables for the second repository. This
+allows for easier copying between repositories. Setting appropriate environment
+variables for the first repository is left to the user.
+
+*-c* _file_::
+Read configuration from _file_. See **b2stic.conf**(5) for a full description.
+
+*-h*::
+Display a help message outlining the usage and options of **b2stic**.
+
+*-n*::
+Perform a "dry run"; do not actually execute commands, just print which
+commands would be executed.
+
+== See Also
+
+**restic**(1),
+**b2stic.conf**(5)
