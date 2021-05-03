@@ -24,6 +24,8 @@ distclean: clean
 
 install:
 	scripts/atomic-install -D -m 0755 b2stic $(DESTDIR)$(BINDIR)/b2stic
+
+install-man:
 	scripts/atomic-install -D -m 0644 b2stic.1 $(DESTDIR)$(MANDIR)/man1/b2stic.1
 	scripts/atomic-install -D -m 0644 b2stic.conf.5 $(DESTDIR)$(MANDIR)/man5/b2stic.conf.5
 
@@ -36,4 +38,4 @@ b2stic.1: b2stic.1.adoc
 b2stic.conf.5: b2stic.conf.5.adoc
 	asciidoctor -a ETCDIR="$(ETCDIR)" -a VERSION="$(VERSION)" -b manpage -o $@ $<
 
-.PHONY: clean distclean install man
+.PHONY: all clean distclean install install-man man
