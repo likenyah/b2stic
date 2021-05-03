@@ -1,6 +1,7 @@
 .*
 *.[1-9]
-*.out
+
+/b2stic
 
 !.gitattributes
 !.gitignore
