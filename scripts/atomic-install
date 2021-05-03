@@ -44,7 +44,7 @@ while getopts ":Dlhm:" opt; do
 		symlink="y"
 		;;
 	m)
-		if ! printf "%s\\n" "${1}" | grep -E -q '^[0-7]{1,4}$'; then
+		if ! printf "%s\\n" "${OPTARG}" | grep -E -q '^[0-7]{1,4}$'; then
 			fatal "invalid mode: %s" "${OPTARG}"
 		fi
 
